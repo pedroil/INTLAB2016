@@ -6,7 +6,7 @@ int buf[15]; // buffer de suavizado
 int x=0;
 /* Fin de carrera */
 int Interrupcion = 0; // Define a la Interrupción 0
-float usDelay=500; // Tiempo para la señal que da los pasos al driver del stepper 
+float usDelay=300; // Tiempo para la señal que da los pasos al driver del stepper 
 int  Home = 1;
 int  HomeLedPin = 3;
 int  pinBoton = 2; // El Pin 2  corresponde al botón
@@ -14,12 +14,12 @@ int  pinBoton = 2; // El Pin 2  corresponde al botón
 /* Pines usados para sensor de distancia */
 #define echoPin 7 // Echo Pin
 #define trigPin 8 // Trigger Pin
-#define LEDPin 9 // Onboard LED 13
+#define LEDPin 9 //  LED 13
 
 /* Pines usados para control de driver stepper motor */
 #define DIR_PIN 12 // CW
 #define STEP_PIN 11 // CLK
-#define EN_PIN 13
+#define EN_PIN 13  // ENABLE
 
 /* Variables usadas en el movimiento del stepper motor */
 #define banda 5         // Banda de tolerancia entre medidas
@@ -28,7 +28,7 @@ int  pinBoton = 2; // El Pin 2  corresponde al botón
 int ContPasosRiel =0;
 int pasos;
 
-int maxRangUson = 200 ; // Maximo rango de distancia de sensor ultrasonido
+int maxRangUson = 310 ; // Maximo rango de distancia de sensor ultrasonido
 int minRangUson = 0; // Minimo rango de distancia de sensor ultrasonido
 int setPoint=0;
 
