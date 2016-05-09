@@ -1,7 +1,7 @@
 # INTLAB2016
 ##Gymkana
 
-###SensorUltrasonido.ino
+###sensorUltrasonido.ino
 En éste código podrán probar el sensor de proximidad en el terminal de Arduino IDE.
 
 ###sensorDistanciaStepper_8A.ino
