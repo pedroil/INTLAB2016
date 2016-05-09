@@ -11,7 +11,10 @@ El código que lee la distancia de un sensor de ultrasonido y lo transmite a una
 ![My image](https://github.com/pedroil/INTLAB2016/blob/master/img/sensorDIstanciaStepper.png)
 
 ###stepperPot.ino
-El ejemplo proportionalcontrol que viene en la librería se adpató para usar el driver TB6560.
+El ejemplo proportionalcontrol que viene en la librería [AccelStepper](http://www.airspayce.com/mikem/arduino/AccelStepper/)
+ se adpató para usar el driver TB6560.
+![My image](https://github.com/pedroil/INTLAB2016/blob/master/img/potenciometro.png)
+
 
 
 
