@@ -21,9 +21,9 @@ AccelStepper stepper(1, 9, 8);
 
 void setup()
 { 
-  stepper.setSpeed(5000);
-  stepper.setMaxSpeed(7000);
-  stepper.setAcceleration(2000);
+  stepper.setSpeed(1000);
+  stepper.setMaxSpeed(3000);
+  stepper.setAcceleration(1000);
  
 }
 
