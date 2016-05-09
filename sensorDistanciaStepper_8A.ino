@@ -28,7 +28,11 @@ int  pinBoton = 2; // El Pin 2  corresponde al botón
 int ContPasosRiel =0;
 int pasos;
 
+<<<<<<< Updated upstream
 int maxRangUson = 310 ; // Maximo rango de distancia de sensor ultrasonido
+=======
+int maxRangUson = 350 ; // Maximo rango de distancia de sensor ultrasonido
+>>>>>>> Stashed changes
 int minRangUson = 0; // Minimo rango de distancia de sensor ultrasonido
 int setPoint=0;
 
