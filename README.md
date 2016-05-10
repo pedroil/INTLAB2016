@@ -25,7 +25,8 @@ El ejemplo proportionalcontrol que viene en la librería [AccelStepper](http://w
 
 ![STL](https://github.com/pedroil/INTLAB2016/blob/master/img/GEAR3D.png)
 
-[Transmisión 3D RepRap] (http://www.thingiverse.com/thing:24071)
+* [Transmisión 3D RepRap] (http://www.thingiverse.com/thing:24071)
+* [Referencias de Arduino](http://www.princeton.edu/~ffab/media___downloads_files/IntroArduinoBook.pdf)
 
 
 
