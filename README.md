@@ -21,9 +21,11 @@ El ejemplo proportionalcontrol que viene en la librería [AccelStepper](http://w
 
 ![Generador](https://github.com/pedroil/INTLAB2016/blob/master/img/gear.png)
 
-[Generador de cases online](http://www.makercase.com/)
+[Generador de cases online] (http://www.makercase.com/)
 
 ![STL](https://github.com/pedroil/INTLAB2016/blob/master/img/GEAR3D.png)
+
+[Transmisión 3D RepRap] (http://www.thingiverse.com/thing:24071)
 
 
 
