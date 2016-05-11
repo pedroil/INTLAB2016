@@ -1,10 +1,13 @@
-// Ultrasonic.h - Library for HR-SC04 Ultrasonic Ranging Module.
-// Rev. 2 (06/2011)
-// www.arduino.com.es
+// Ultrasonic - Library for HR-SC04 Ultrasonic Ranging Module.
+// Rev.4 (06/2012)
+// J.Rodrigo ( www.jrodrigo.net )
+// more info at www.ardublog.com
 
 #include <Ultrasonic.h>
 #include <LiquidCrystal.h>
-LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2); // LCD arduino library
+
 Ultrasonic ultrasonic(9,8); // (Trig PIN,Echo PIN)
 
 void setup() {
