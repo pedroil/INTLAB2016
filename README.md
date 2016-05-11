@@ -27,6 +27,7 @@ El ejemplo proportionalcontrol que viene en la librería [AccelStepper](http://w
 
 * [Transmisión 3D RepRap] (http://www.thingiverse.com/thing:24071)
 * [Referencias de Arduino](http://www.princeton.edu/~ffab/media___downloads_files/IntroArduinoBook.pdf)
+* [Librería HC-SR04](https://github.com/JRodrigoTech/Ultrasonic-HC-SR04)
 
 
 
