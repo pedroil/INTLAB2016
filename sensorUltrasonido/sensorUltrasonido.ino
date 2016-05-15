@@ -19,7 +19,7 @@ int buf[15]; // buffer de suavizado
 
 #define echoPin 7 // Echo Pin
 #define trigPin 8 // Trigger Pin
-#define LEDPin 13 // Onboard LED
+#define LEDPin 9 // Onboard LED
 
 int maximumRange = 200; // Maximum range needed
 int minimumRange = 0; // Minimum range needed

@@ -1,14 +1,14 @@
 /* Variables de suavizado */
 long soft;
 int b = 99;
-int buf[15]; // buffer de suavizado
+int buf[99]; // buffer de suavizado
 
 int x = 0;  // WTF?
 
 
 /* Fin de carrera */
 int Interrupcion = 0; // Define a la Interrupción 0
-float usDelay = 300; // Tiempo para la señal que da los pasos al driver del stepper
+float usDelay = 500; // Tiempo para la señal que da los pasos al driver del stepper
 int  Home = 1;
 int  HomeLedPin = 3;
 int  pinBoton = 2; // El Pin 2  corresponde al botón
@@ -32,7 +32,7 @@ int pasos;
 
 
 int maxRangUson = 350 ; // Maximo rango de distancia de sensor ultrasonido
-int minRangUson = 0; // Minimo rango de distancia de sensor ultrasonido
+int minRangUson = 1; // Minimo rango de distancia de sensor ultrasonido
 int setPoint = 0;
 
 long duracion, distancia; // Duration used to calculate distance
@@ -62,15 +62,15 @@ void setup() {
   digitalWrite(pinBoton, HIGH ); // Activación de la resistencia interna pull-up
   attachInterrupt(Interrupcion, cambios, LOW); // la interrupción0 se genera cuando el pin 2 posee un valor HIGH y ejecuta la subrutina "cambios".
 
-  /* Inicialización de variables usadas en el sensor de distancia */
 
+  /* Inicialización de variables del buffer usadas en el sensor de distancia */
   for (int i = 0; i < b; i++) {
     /* llenar el buffer de distancias sensadas con ceros */
     buf[i] = 0;
   }
+
   count = 0;
   soft = 0;
-
   GoToHome();
   x = 0;
 }
@@ -105,6 +105,8 @@ void loop() {
     // Serial.println("-1");
     distancia = -1;
     digitalWrite(LEDPin, HIGH);
+    GoToHome();
+    setPoint = 0;
   }
   else {
     /* Publicar en monitor serial el valor de distancia */
@@ -116,7 +118,7 @@ void loop() {
   calcSoft(); // Rutina de calculo de valor de distancia promediado
   //Serial.println(ContPasosRiel);
 
-  Serial.println("ContPasosRiel: "+ContPasosRiel);
+  Serial.println("ContPasosRiel: " + ContPasosRiel);
 
 
   if (ContPasosRiel < setPoint) {
@@ -125,7 +127,7 @@ void loop() {
     pasos = setPoint - ContPasosRiel;
     rotate(pasos);
     ContPasosRiel = ContPasosRiel + pasos;
-    Serial.println("ContPasosRiel: "+ContPasosRiel);
+    Serial.println("ContPasosRiel: " + ContPasosRiel);
 
 
     // opcion de codigo 2: Se desplaza de a 1 paso a la vez hasta que ContPosRiel=setPoint
@@ -202,7 +204,7 @@ void rotate(int steps) {
     if (dir == 0) {
       x --;
     }
-    Serial.println(x);
+    Serial.println("x = " + x);
   }
   digitalWrite(EN_PIN, HIGH);
 
