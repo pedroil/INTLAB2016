@@ -23,6 +23,7 @@ void readDistance() {
 /* Subrutina de calculo de suavizado */
 
 void calcSoft() {
+  /* agregue la distancia al arreglo sólo si está dentro del rango*/
   if (distancia != -1) {
     buf[count] = distancia;
     count ++;
@@ -103,9 +104,13 @@ void reset() {
   Home = 1;
   HomeLedPin = 3;
   pinBoton = 2; // El Pin 2  corresponde al botón
+  count = 0;
+  soft = 0;
 }
 
 void printVars() {
-  Serial.println(distancia + " " + pasos);
+  Serial.println("d = " + distancia);
+  Serial.print(" s = " + soft);
+  Serial.print(" p = " + pasos);
 }
 

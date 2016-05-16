@@ -1,13 +1,18 @@
+/*
+ * 
+ * vuelve al home cada 100000 loops
+ * 
+ */
+
 /* Variables de suavizado */
 long soft;
-int b = 15;   // estos 2 numeros deben ser iguales
-int buf[15];  // buffer de suavizado
+int b = 99;   // estos 2 numeros deben ser iguales
+int buf[99];  // buffer de suavizado
 
 int x = 0;
 
 /* variables para determinar actividad */
-int distSample[2];
-int timeDelay = 5000; // 5 segundos de diferencia
+int frameCount = 0;
 
 /* Fin de carrera */
 int Interrupcion = 0; // Define a la Interrupción 0 - boton de home
@@ -20,8 +25,8 @@ int  pinBoton = 2; // El Pin 2  corresponde al botón
 int ContPasosRiel = 0;
 int pasos;
 
-int maxRangUson = 200 ; // Maximo rango de distancia de sensor ultrasonido
-int minRangUson = 2; // Minimo rango de distancia de sensor ultrasonido
+int maxRangUson = 250 ; // Maximo rango de distancia de sensor ultrasonido
+int minRangUson = 1; // Minimo rango de distancia de sensor ultrasonido
 int setPoint = 0;
 
 long duracion, distancia; // Duration used to calculate distance
@@ -85,8 +90,8 @@ void setup() {
 void loop() {
 
   readDistance();
-  calcSoft(); // Rutina de calculo de valor de distancia promediado
-  
+
+
   /* si es que está fuera del rango del ultrasonido */
   if (distancia >= maxRangUson || distancia <= minRangUson) {
     distancia = -1;
@@ -99,7 +104,7 @@ void loop() {
     digitalWrite(LEDPin, LOW);
   }
 
-  
+  calcSoft();
 
   if (ContPasosRiel != setPoint) {
     //opcion de codigo 1: se desplaza el total de pasos entre ContPosRiel y setPoint
@@ -112,7 +117,11 @@ void loop() {
 
   /* Delay de 30ms antes de la siguiente lectura de la variable "soft" */
   delay(1);
-  printVars();
+  frameCount++;
+
+  if (frameCount % 100000 == 0) {
+    setPoint = 0;
+  }
 }
 
 
