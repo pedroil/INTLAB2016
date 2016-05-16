@@ -1,8 +1,8 @@
 /*
-
-  Esqueleto de programa
-
-*/
+ * 
+ * Esqueleto
+ * 
+ */
 
 
 void setup() {
@@ -22,5 +22,6 @@ void loop() {
     readDistance();
     mapDistance();
     goTo(mappedDistance);
+    printValues();
   }
 }

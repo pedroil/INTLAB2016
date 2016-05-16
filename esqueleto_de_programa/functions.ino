@@ -1,3 +1,9 @@
+/*
+ * 
+ *  funciones 
+ * 
+ */
+ 
 void initFuntion(){
   
 }
@@ -35,7 +41,7 @@ void mapDistance(){
   
 }
 
-void goTo(int t){
+void goTo(int d){
   
 }
 
