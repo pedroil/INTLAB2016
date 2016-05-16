@@ -14,9 +14,7 @@ void loop() {
     initFunction();
   }
 
-  checkActivity();
-
-  if (quiet) {
+  if (checkActivity()) {
     goHome();
   } else {
     readDistance();

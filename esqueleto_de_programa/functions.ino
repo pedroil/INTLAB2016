@@ -29,7 +29,7 @@ void goHome(){
   
 }
 
-void checkActivity(){
+boolean checkActivity(){
   
 }
 
