@@ -1,13 +1,12 @@
 /* Variables de suavizado */
 long soft;
-int b = 99;
+int b = 99;   // estos 2 numeros deben ser iguales
 int buf[99]; // buffer de suavizado
 
-int x = 0;  // WTF?
-
+int x = 0;
 
 /* Fin de carrera */
-int Interrupcion = 0; // Define a la Interrupción 0
+int Interrupcion = 0; // Define a la Interrupción 0 - boton de home
 float usDelay = 500; // Tiempo para la señal que da los pasos al driver del stepper
 int  Home = 1;
 int  HomeLedPin = 3;
@@ -16,12 +15,12 @@ int  pinBoton = 2; // El Pin 2  corresponde al botón
 /* Pines usados para sensor de distancia */
 #define echoPin 7 // Echo Pin
 #define trigPin 8 // Trigger Pin
-#define LEDPin 9 //  LED 13
+#define LEDPin 9  // Onboard LED 13
 
 /* Pines usados para control de driver stepper motor */
 #define DIR_PIN 12 // CW
 #define STEP_PIN 11 // CLK
-#define EN_PIN 13  // ENABLE
+#define EN_PIN 13
 
 /* Variables usadas en el movimiento del stepper motor */
 #define banda 5         // Banda de tolerancia entre medidas
@@ -30,9 +29,8 @@ int  pinBoton = 2; // El Pin 2  corresponde al botón
 int ContPasosRiel = 0;
 int pasos;
 
-
-int maxRangUson = 350 ; // Maximo rango de distancia de sensor ultrasonido
-int minRangUson = 1; // Minimo rango de distancia de sensor ultrasonido
+int maxRangUson = 300 ; // Maximo rango de distancia de sensor ultrasonido
+int minRangUson = 2; // Minimo rango de distancia de sensor ultrasonido
 int setPoint = 0;
 
 long duracion, distancia; // Duration used to calculate distance
@@ -62,15 +60,15 @@ void setup() {
   digitalWrite(pinBoton, HIGH ); // Activación de la resistencia interna pull-up
   attachInterrupt(Interrupcion, cambios, LOW); // la interrupción0 se genera cuando el pin 2 posee un valor HIGH y ejecuta la subrutina "cambios".
 
+  /* Inicialización de variables usadas en el sensor de distancia */
 
-  /* Inicialización de variables del buffer usadas en el sensor de distancia */
   for (int i = 0; i < b; i++) {
     /* llenar el buffer de distancias sensadas con ceros */
     buf[i] = 0;
   }
-
   count = 0;
   soft = 0;
+
   GoToHome();
   x = 0;
 }
@@ -90,7 +88,7 @@ void loop() {
 
   duracion = pulseIn(echoPin, HIGH);
 
-  /* con el tiempo de duración y la velocidad del sonido (constante) se calcula la distancia */
+  /* con el tiempo de duración y la velocidad del sonido (constante) se calcula la distancia (52.7) */
 
   distancia = duracion / 52.7;
 
@@ -106,7 +104,7 @@ void loop() {
     distancia = -1;
     digitalWrite(LEDPin, HIGH);
     GoToHome();
-    setPoint = 0;
+
   }
   else {
     /* Publicar en monitor serial el valor de distancia */
@@ -118,8 +116,8 @@ void loop() {
   calcSoft(); // Rutina de calculo de valor de distancia promediado
   //Serial.println(ContPasosRiel);
 
-  Serial.println("ContPasosRiel: " + ContPasosRiel);
-
+  Serial.print("ContPasosRiel: ");
+  Serial.println(ContPasosRiel);
 
   if (ContPasosRiel < setPoint) {
 
@@ -127,8 +125,8 @@ void loop() {
     pasos = setPoint - ContPasosRiel;
     rotate(pasos);
     ContPasosRiel = ContPasosRiel + pasos;
-    Serial.println("ContPasosRiel: " + ContPasosRiel);
-
+    Serial.print("ContPasosRiel: ");
+    Serial.println(ContPasosRiel);
 
     // opcion de codigo 2: Se desplaza de a 1 paso a la vez hasta que ContPosRiel=setPoint
     //rotate(1);  //Valor de pasos con signo negativo indicando dirección
@@ -189,6 +187,7 @@ void rotate(int steps) {
   //Serial.println(steps);
   /* Control de pines "ENABLE", "DIRECCIÖN", "PASOS" */
   digitalWrite(DIR_PIN, dir);
+
   digitalWrite(EN_PIN, LOW);
 
   for (int i = 0; i < steps; i++) {
@@ -204,7 +203,7 @@ void rotate(int steps) {
     if (dir == 0) {
       x --;
     }
-    Serial.println("x = " + x);
+    Serial.println(x);
   }
   digitalWrite(EN_PIN, HIGH);
 
@@ -215,7 +214,7 @@ void setReferencia() {
 
   int distUsonScal = map(soft, minRangUson, maxRangUson, maxPasosRiel, minPasosRiel); // Escalando medición de distancia de sensor ultrasonido a la escala del sensro IR del riel
 
-  if (distUsonScal >= (minPasosRiel) && distUsonScal <= (maxPasosRiel))  setPoint = distUsonScal;
+  if (distUsonScal >= minPasosRiel && distUsonScal <= maxPasosRiel)  setPoint = distUsonScal;
   //Serial.print("-----");
   Serial.print("setPoint: ");
   Serial.println(setPoint);
@@ -244,5 +243,6 @@ void cambios()
   //digitalWrite(HomeLedPin, HIGH);   // encender o apagar el LED
   detachInterrupt(Interrupcion);
 }
+
 
 
