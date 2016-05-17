@@ -9,7 +9,7 @@ int timeDelay = 5000; // 5 segundos de diferencia
 
 /* Fin de carrera */
 int Interrupcion = 0; // Define a la Interrupción 0 - boton de home
-float usDelay = 500; // Tiempo para la señal que da los pasos al driver del stepper
+float usDelay = 900; // Tiempo para la señal que da los pasos al driver del stepper
 int  Home = 1;
 int  HomeLedPin = 3;
 int  pinBoton = 2; // El Pin 2  corresponde al botón
@@ -18,7 +18,7 @@ int  pinBoton = 2; // El Pin 2  corresponde al botón
 int ContPasosRiel = 0;
 int pasos;
 
-int maxRangUson = 100; // Maximo rango de distancia de sensor ultrasonido
+int maxRangUson = 120; // Maximo rango de distancia de sensor ultrasonido
 int minRangUson = 2; // Minimo rango de distancia de sensor ultrasonido
 int setPoint = 0;
 
@@ -42,9 +42,11 @@ int distUsonScal;
 #define banda 5         // Banda de tolerancia entre medidas
 #define minPasosRiel 0    // Minimo numero de pasos del riel
 #define maxPasosRiel 3900  // Maximo numero de pasos del riel
+/* invertir los valores de minPasosRiel y maxPasosRiel para que el motor pueda setearse al final del recorrido y pueda devolverse
+   al variar la distancia medida por el sensor ultrasonido */
 
 void setup() {
-  Serial.begin (115200);
+  /*Serial.begin (115200);*/
 
   /* Configuración de pines como entrada o salida */
 
@@ -58,7 +60,6 @@ void setup() {
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   pinMode(LEDPin, OUTPUT); // Use LED indicator (if required)
-
   pinMode(HomeLedPin, OUTPUT);
   /* Pin Botón */
   pinMode(pinBoton, INPUT);  //El pin conectado al botón se configura como entrada
@@ -100,10 +101,10 @@ void loop() {
   
 
   if (ContPasosRiel != setPoint) {
-    //opcion de codigo 1: se desplaza el total de pasos entre ContPosRiel y setPoint
-    pasos = setPoint - ContPasosRiel;
-    rotate(pasos);
-    ContPasosRiel = ContPasosRiel + pasos;
+    /* opcion de codigo 1: se desplaza el total de pasos entre ContPosRiel y setPoint */
+    pasos = setPoint - ContPasosRiel; // se selecciona el número de pasos que debe dar el motor stepper para alcanzar el setPoint (mapeo del sensor ultrasonido)
+    rotate(pasos); // se genera la rotación del motor de acuerdo al valor entero y el signo de la variable "pasos"
+    ContPasosRiel = ContPasosRiel + pasos; // se corrige el contador de pasos.
   }
 
 
