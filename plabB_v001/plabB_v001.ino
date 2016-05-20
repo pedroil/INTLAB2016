@@ -1,12 +1,18 @@
-// ProportionalControl.pde
-// -*- mode: C++ -*-
-//
-// Make a single stepper follow the analog value read from a pot or whatever
-// The stepper will move at a constant speed to each newly set posiiton,
-// depending on the value of the pot.
-//
-// Copyright (C) 2012 Mike McCauley
-// $Id: ProportionalControl.pde,v 1.1 2011/01/05 01:51:01 mikem Exp mikem $
+/*
+ *  Plan B
+ *  Move stepper motor according to distance read
+ *  from ultrasound
+ */
+
+//////////////////////////////////////////////////////////////////
+/////////////// el número que hay que modificar //////////////////
+//////////////////////////////////////////////////////////////////
+
+                      int maxSteps = 200; 
+
+//////////////////////////////////////////////////////////////////
+///////////// rango máximo de pasos para el motor ////////////////
+//////////////////////////////////////////////////////////////////
 
 #include <AccelStepper.h>
 #include <Ultrasonic.h>
@@ -28,9 +34,9 @@ void setup()
   stepper.setSpeed(2000);
   stepper.setMaxSpeed(4000);
   stepper.setAcceleration(1000);
-
+  
   // UltraSound
-  if(test) Serial.begin(115200);
+  if (test) Serial.begin(115200);
   pinMode(4, OUTPUT); // VCC pin
   pinMode(7, OUTPUT); // GND ping
   digitalWrite(4, HIGH); // VCC +5V mode
@@ -41,7 +47,8 @@ void loop()
 {
   // Read new position
   int distance = ultrasonic.Ranging(CM);
-  int steps = round(map(distance, 0, 172, 8000, 0));
+  int steps = round(map(distance, 0, 172, maxSteps, 0));
+  steps = constrain(steps, 0, maxSteps);
 
   // Set stepper to mapped steps
   stepper.moveTo(steps);
@@ -52,5 +59,4 @@ void loop()
     Serial.print("cm   ");
     Serial.println(steps);
   }
-  // delay(100);
 }
