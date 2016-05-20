@@ -11,7 +11,7 @@
 /////////////// el número que hay que modificar //////////////////
 //////////////////////////////////////////////////////////////////
 
-                       int maxSteps = 2000;
+                       int maxSteps = 1850;
 
 //////////////////////////////////////////////////////////////////
 ///////////// rango máximo de pasos para el motor ////////////////
@@ -25,12 +25,18 @@ AccelStepper stepper(1, 9, 8);
 // Define an ultrasonic sensor ~ (Trig PIN 5,Echo PIN 6)
 Ultrasonic ultrasonic(5, 6, 10000); 
 
+/* Variables de suavizado */
+long soft;
+int b = 200;   // estos 2 numeros deben ser iguales
+int buf[200];  // buffer de suavizado
+int count;
 
 void setup() {
   // Stepper
-  stepper.setSpeed(1000);
-  stepper.setMaxSpeed(4000);
-  stepper.setAcceleration(1000);
+  stepper.setSpeed(200);
+  stepper.setMaxSpeed(300);
+  stepper.setAcceleration(50);
+ // stepper.direction(1);
 
   // UltraSound
   pinMode(4, OUTPUT); // VCC pin
@@ -40,12 +46,28 @@ void setup() {
 
   // if test init serial
   if (test) Serial.begin(115200);
+
+  count = 0;
 }
 
 void loop() {
   // Read new position
   int distance = ultrasonic.Ranging(CM);
-  int steps = round(map(distance, 0, 172, maxSteps, 0));
+
+    buf[count] = distance;
+    count ++;
+    count %= b;
+  long val = 0;
+  
+  for (int i = 0; i < b; i++) {
+    val += buf[i];
+  }
+  
+  soft = val / b;
+  
+  // int steps = round(map(distance, 0, 172, maxSteps, 0));
+  
+  int steps = round(map(soft, 10, 150, maxSteps, 0));
   steps = constrain(steps, 0, maxSteps);
 
   // Set stepper to mapped steps
@@ -54,7 +76,7 @@ void loop() {
 
   // if test then print values to serial
   if (test) {
-    Serial.print(distance);
+    Serial.print(soft);
     Serial.print("cm   ");
     Serial.println(steps);
   }
