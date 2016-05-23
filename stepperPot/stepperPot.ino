@@ -21,9 +21,9 @@ AccelStepper stepper(1, 9, 8);
 
 void setup()
 { 
-  stepper.setSpeed(1000);
-  stepper.setMaxSpeed(3000);
-  stepper.setAcceleration(1000);
+  stepper.setSpeed(100);
+  stepper.setMaxSpeed(300);
+  stepper.setAcceleration(100);
  
 }
 
@@ -31,7 +31,7 @@ void loop()
 {
   // Read new position
   int analog_in = analogRead(ANALOG_IN);
-  stepper.moveTo((analog_in)*4);
+  stepper.moveTo((analog_in)*1.1);
   stepper.runSpeedToPosition();
   delayMicroseconds(100);
 }
